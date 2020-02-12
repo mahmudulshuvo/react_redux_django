@@ -19,6 +19,11 @@ class Form extends Component {
     const { name, email, message } = this.state;
     const lead = { name, email, message };
     this.props.addLead(lead);
+    this.setState({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
 
   onChange = e => {
@@ -31,7 +36,7 @@ class Form extends Component {
     const { name, email, message } = this.state;
     return (
       <div>
-        <h2>Input Form</h2>
+        <h2>Add Lead</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Name</label>

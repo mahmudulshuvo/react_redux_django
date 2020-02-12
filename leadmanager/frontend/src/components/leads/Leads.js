@@ -16,7 +16,7 @@ class Leads extends Component {
   render() {
     return (
       <Fragment>
-        <h2 style={{ marginTop: 20 }}>Lead</h2>
+        <h2 style={{ marginTop: 20 }}>Leads</h2>
         <table className="table table-striped table-inverse table-responsive">
           <thead className="thead-inverse">
             <tr>
