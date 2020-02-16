@@ -17,7 +17,7 @@ class Leads extends Component {
     return (
       <Fragment>
         <h2 style={{ marginTop: 20 }}>Leads</h2>
-        <table className="table table-striped table-inverse table-responsive">
+        <table className="table table-striped table-inverse">
           <thead className="thead-inverse">
             <tr>
               <th>ID</th>
