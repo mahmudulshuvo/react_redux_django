@@ -8,6 +8,7 @@ import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import store from '../store';
 import Login from '../accounts/login';
+import Register from '../accounts/Register';
 import PrivateRoute from '../common/PrivateRoute';
 import {
   HashRouter as Router,
@@ -34,6 +35,7 @@ class App extends Component {
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={Dashboard} />
+                  <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>
               </div>

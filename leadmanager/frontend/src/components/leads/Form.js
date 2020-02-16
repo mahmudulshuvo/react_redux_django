@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addLead } from '../../actions/leads';
 
-class Form extends Component {
+export class Form extends Component {
   state = {
     name: '',
     email: '',
@@ -13,6 +13,8 @@ class Form extends Component {
   static propTypes = {
     addLead: PropTypes.func.isRequired
   };
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
@@ -26,65 +28,47 @@ class Form extends Component {
     });
   };
 
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
   render() {
     const { name, email, message } = this.state;
     return (
-      <div>
+      <div className="card card-body mt-4 mb-4">
         <h2>Add Lead</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Name</label>
             <input
-              type="text"
               className="form-control"
+              type="text"
               name="name"
-              aria-describedby="helpId"
-              value={name}
               onChange={this.onChange}
+              value={name}
             />
-            <small id="helpId" className="form-text text-muted">
-              Please enter your full name
-            </small>
           </div>
           <div className="form-group">
-            <label>Email address</label>
+            <label>Email</label>
             <input
+              className="form-control"
               type="email"
               name="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              value={email}
               onChange={this.onChange}
+              value={email}
             />
-            <small id="emailHelp" className="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small>
           </div>
           <div className="form-group">
             <label>Message</label>
             <textarea
               className="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
+              type="text"
               name="message"
-              aria-describedby="helpId"
-              value={message}
               onChange={this.onChange}
-            ></textarea>
-            <small id="helpId" className="form-text text-muted">
-              Please enter your message
-            </small>
+              value={message}
+            />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     );
