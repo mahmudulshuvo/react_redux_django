@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getLeads, deleteLead } from '../../actions/leads';
+import { getLeads, deleteLead, editLead } from '../../actions/leads';
 class Leads extends Component {
   static propTypes = {
     leads: PropTypes.array.isRequired,
@@ -11,6 +11,13 @@ class Leads extends Component {
 
   componentDidMount() {
     this.props.getLeads();
+  }
+
+  handleEdit(id, name, email, message) {
+    console.log('id', id);
+    console.log('name ', name);
+    console.log('email ', email);
+    console.log('message ', message);
   }
 
   render() {
@@ -28,7 +35,16 @@ class Leads extends Component {
           </thead>
           <tbody>
             {this.props.leads.map(lead => (
-              <tr key={lead.id}>
+              <tr
+                key={lead.id}
+                onClick={this.props.editLead.bind(
+                  this,
+                  lead.id,
+                  lead.name,
+                  lead.email,
+                  lead.message
+                )}
+              >
                 <td scope="row">{lead.id}</td>
                 <td>{lead.name}</td>
                 <td>{lead.email}</td>
@@ -54,4 +70,6 @@ const mapStateToProps = state => ({
   leads: state.leads.leads
 });
 
-export default connect(mapStateToProps, { getLeads, deleteLead })(Leads);
+export default connect(mapStateToProps, { getLeads, deleteLead, editLead })(
+  Leads
+);

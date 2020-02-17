@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
-import { GET_LEADS, DELETE_LEAD, ADD_LEAD } from './types';
+import {
+  GET_LEADS,
+  DELETE_LEAD,
+  ADD_LEAD,
+  EDIT_LEAD,
+  CLEAR_EDIT
+} from './types';
 
 // GET LEADS
 export const getLeads = () => (dispatch, getState) => {
@@ -46,4 +52,18 @@ export const addLead = lead => (dispatch, getState) => {
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+// EDIT LEAD
+export const editLead = (id, name, email, message) => dispatch => {
+  const data = {
+    id: id,
+    name: name,
+    email: email,
+    message: message
+  };
+  dispatch({
+    type: EDIT_LEAD,
+    payload: data
+  });
 };

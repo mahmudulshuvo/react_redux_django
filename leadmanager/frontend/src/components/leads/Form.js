@@ -11,12 +11,14 @@ export class Form extends Component {
   };
 
   static propTypes = {
+    editLead: PropTypes.object,
     addLead: PropTypes.func.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
+    console.log('on submit');
     e.preventDefault();
     const { name, email, message } = this.state;
     const lead = { name, email, message };
@@ -27,6 +29,28 @@ export class Form extends Component {
       message: ''
     });
   };
+
+  componentDidUpdate(prevProps) {
+    const { editLead } = this.props;
+    if (editLead !== prevProps.editLead) {
+      console.log('edit lead value ', editLead);
+      const { name, email, message } = editLead;
+      this.setState({
+        name,
+        email,
+        message
+      });
+    }
+  }
+
+  clearState() {
+    console.log('im here');
+    this.setState({
+      name: '',
+      email: '',
+      message: ''
+    });
+  }
 
   render() {
     const { name, email, message } = this.state;
@@ -65,9 +89,20 @@ export class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={this.onSubmit}
+            >
               Submit
             </button>
+            {this.props.editLead.id ? (
+              <button className="btn btn-danger ml-1" onClick={this.clearState}>
+                Cancel
+              </button>
+            ) : (
+              ''
+            )}
           </div>
         </form>
       </div>
@@ -75,4 +110,8 @@ export class Form extends Component {
   }
 }
 
-export default connect(null, { addLead })(Form);
+const mapStateToProps = state => ({
+  editLead: state.leads.editLead
+});
+
+export default connect(mapStateToProps, { addLead })(Form);
