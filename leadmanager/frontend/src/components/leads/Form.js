@@ -106,7 +106,7 @@ export class Form extends Component {
               className="btn btn-primary"
               onClick={this.onSubmit}
             >
-              Submit
+              {this.props.editLead.id ? 'Update' : 'Submit'}
             </button>
             {this.props.editLead.id ? (
               <button className="btn btn-danger ml-1" onClick={this.clearState}>
