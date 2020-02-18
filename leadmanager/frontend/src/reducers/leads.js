@@ -51,14 +51,13 @@ export default function(state = initialState, action) {
         editLead: {}
       };
     case UPDATE_LEAD:
-      for (index = 0; index < Leads.length; index++) {
-        if (leads[index].id === action.payload.id) {
-          leads[index] = action.payload;
+      for (let index = 0; index < state.leads.length; index++) {
+        if (state.leads[index].id === action.payload.id) {
+          state.leads[index] = action.payload;
         }
       }
       return {
         ...state,
-        leads,
         editLead: {}
       };
     default:

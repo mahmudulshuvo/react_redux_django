@@ -85,12 +85,10 @@ export const updateLead = (id, name, email, message) => (
       dispatch(createMessage({ updateLead: 'Lead Updated' }));
       dispatch({
         type: UPDATE_LEAD,
-        payload: res.data
+        payload: res
       });
     })
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch(err => console.log(err));
 };
 
 // CLEAR EDIT
