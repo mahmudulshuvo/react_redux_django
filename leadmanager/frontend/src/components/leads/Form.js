@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addLead } from '../../actions/leads';
+import { addLead, clearEdit, updateLead } from '../../actions/leads';
 
 export class Form extends Component {
   state = {
@@ -12,7 +12,9 @@ export class Form extends Component {
 
   static propTypes = {
     editLead: PropTypes.object,
-    addLead: PropTypes.func.isRequired
+    addLead: PropTypes.func.isRequired,
+    clearEdit: PropTypes.func.isRequired,
+    updateLead: PropTypes.func.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -22,7 +24,12 @@ export class Form extends Component {
     e.preventDefault();
     const { name, email, message } = this.state;
     const lead = { name, email, message };
-    this.props.addLead(lead);
+    if (this.props.editLead.id) {
+      this.props.updateLead(this.props.editLead.id, name, email, message);
+    } else {
+      this.props.addLead(lead);
+    }
+
     this.setState({
       name: '',
       email: '',
@@ -43,14 +50,16 @@ export class Form extends Component {
     }
   }
 
-  clearState() {
+  clearState = e => {
+    e.preventDefault();
     console.log('im here');
     this.setState({
       name: '',
       email: '',
       message: ''
     });
-  }
+    this.props.clearEdit();
+  };
 
   render() {
     const { name, email, message } = this.state;
@@ -114,4 +123,6 @@ const mapStateToProps = state => ({
   editLead: state.leads.editLead
 });
 
-export default connect(mapStateToProps, { addLead })(Form);
+export default connect(mapStateToProps, { addLead, clearEdit, updateLead })(
+  Form
+);

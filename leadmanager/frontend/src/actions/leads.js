@@ -6,7 +6,8 @@ import {
   DELETE_LEAD,
   ADD_LEAD,
   EDIT_LEAD,
-  CLEAR_EDIT
+  CLEAR_EDIT,
+  UPDATE_LEAD
 } from './types';
 
 // GET LEADS
@@ -65,5 +66,36 @@ export const editLead = (id, name, email, message) => dispatch => {
   dispatch({
     type: EDIT_LEAD,
     payload: data
+  });
+};
+
+// UPDATE LEAD
+export const updateLead = (id, name, email, message) => (
+  dispatch,
+  getState
+) => {
+  const data = {
+    name: name,
+    email: email,
+    message: message
+  };
+  axios
+    .put(`/api/leads/${id}/`, data, tokenConfig(getState))
+    .then(res => {
+      dispatch(createMessage({ updateLead: 'Lead Updated' }));
+      dispatch({
+        type: UPDATE_LEAD,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// CLEAR EDIT
+export const clearEdit = () => dispatch => {
+  dispatch({
+    type: CLEAR_EDIT
   });
 };

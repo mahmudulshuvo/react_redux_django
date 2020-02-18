@@ -4,8 +4,10 @@ import {
   ADD_LEAD,
   EDIT_LEAD,
   CLEAR_LEADS,
-  CLEAR_EDIT
+  CLEAR_EDIT,
+  UPDATE_LEAD
 } from '../actions/types.js';
+import Leads from '../components/leads/Leads.js';
 
 const initialState = {
   leads: [],
@@ -41,6 +43,22 @@ export default function(state = initialState, action) {
       return {
         ...state,
         leads: [],
+        editLead: {}
+      };
+    case CLEAR_EDIT:
+      return {
+        ...state,
+        editLead: {}
+      };
+    case UPDATE_LEAD:
+      for (index = 0; index < Leads.length; index++) {
+        if (leads[index].id === action.payload.id) {
+          leads[index] = action.payload;
+        }
+      }
+      return {
+        ...state,
+        leads,
         editLead: {}
       };
     default:
